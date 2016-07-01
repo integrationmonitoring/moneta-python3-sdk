@@ -1,0 +1,174 @@
+[monetasdk_paysys_payanyway]
+group = electronic
+title = PayAnyWay
+accountId = 0
+unitId = 0
+createInvoice = 0
+
+[monetasdk_paysys_alfaclick]
+group = bank
+title = Internet-bank &laquo;Alfa-Click&raquo;
+accountId = 0
+unitId = 587412
+createInvoice = 0
+
+[monetasdk_paysys_dengimail]
+group = electronic
+title = Money@mail.ru
+accountId = 0
+unitId = 545234
+createInvoice = 0
+
+[monetasdk_paysys_faktura]
+group = bank
+title = Faktura
+accountId = 0
+unitId = 609111
+createInvoice = 0
+
+[monetasdk_paysys_moneymail]
+group = electronic
+title = MoneyMail
+accountId = 29
+unitId = 1038
+createInvoice = 0
+
+[monetasdk_paysys_moneta]
+group = electronic
+title = Moneta.ru
+accountId = 94
+unitId = 1015
+createInvoice = 0
+
+[monetasdk_paysys_plastic]
+group = card
+title = VISA, Master Card
+accountId = 0
+unitId = card
+createInvoice = 0
+
+[monetasdk_paysys_psb]
+group = bank
+title = Internet-bank &laquo;Promsvyazbank&raquo;
+accountId = 0
+unitId = 661709
+createInvoice = 0
+
+[monetasdk_paysys_walletone]
+group = electronic
+title = Wallet One
+accountId = 310212
+unitId = 153
+createInvoice = 0
+
+[monetasdk_paysys_webmoney]
+group = electronic
+title = WebMoney
+accountId = 0
+unitId = 1017
+createInvoice = 0
+
+[monetasdk_paysys_yandex]
+group = electronic
+title = Yandex.Money
+accountId = 16
+unitId = 1020
+createInvoice = 0
+
+[monetasdk_paysys_qiwi]
+group = terminal
+title = QIWI Wallet
+accountId = 822360
+unitId = 0
+createInvoice = 0
+
+[monetasdk_paysys_banktransfer]
+group = bank
+title = Bank transfer
+accountId = 75983431
+unitId = 705000
+createInvoice = 1
+
+[monetasdk_paysys_ciberpay]
+group = terminal
+title = CiberPay
+accountId = 19357960
+unitId = 489755
+createInvoice = 1
+
+[monetasdk_paysys_comepay]
+group = terminal
+title = ComePay
+accountId = 47654606
+unitId = 228820
+createInvoice = 1
+
+[monetasdk_paysys_contact]
+group = bank
+title = Contact
+accountId = 26
+unitId = 1028
+createInvoice = 1
+
+[monetasdk_paysys_elecsnet]
+group = terminal
+title = Elecsnet
+accountId = 10496472
+unitId = 232821
+createInvoice = 1
+
+[monetasdk_paysys_euroset]
+group = terminal
+title = Euroset, Svyaznoi
+accountId = 136
+unitId = 248362
+createInvoice = 1
+
+[monetasdk_paysys_forward]
+group = terminal
+title = Forward Mobile
+accountId = 116
+unitId = 83046
+createInvoice = 1
+
+[monetasdk_paysys_gorod]
+group = terminal
+title = Federal System GOROD
+accountId = 152
+unitId = 426904
+createInvoice = 1
+
+[monetasdk_paysys_mcb]
+group = bank
+title = MosCreditBank
+accountId = 143
+unitId = 295339
+createInvoice = 1
+
+[monetasdk_paysys_novoplat]
+group = terminal
+title = NovoPlat
+accountId = 80314912
+unitId = 281129
+createInvoice = 1
+
+[monetasdk_paysys_platika]
+group = terminal
+title = PLATiKA
+accountId = 15662295
+unitId = 226272
+createInvoice = 1
+
+[monetasdk_paysys_post]
+group = bank
+title = Russian Post Transfer
+accountId = 15
+unitId = 1029
+createInvoice = 1
+
+[monetasdk_paysys_sberbank]
+group = bank
+title = Sberbank
+accountId = 160
+unitId = 510801
+createInvoice = 1

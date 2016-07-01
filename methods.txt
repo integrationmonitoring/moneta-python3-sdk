@@ -1,0 +1,130 @@
+Suds ( https://fedorahosted.org/suds/ )  version: 0.4 GA  build: R699-20100913
+Service ( MessagesService ) tns="http://www.moneta.ru/services.wsdl"
+   Prefixes (1)
+      ns0 = "http://www.moneta.ru/schemas/messages.xsd"
+   Ports (1):
+      (MessagesSoap11)
+         Methods (59):
+            AccountStatement(ns0:filter filter, xs:int pageSize, )
+            ApprovePhoneApplyCode(xs:long unitId, xs:long profileId, xs:string confirmationCode, )
+            ApprovePhoneSendConfirmation(xs:long unitId, xs:long profileId, xs:string text, )
+            AuthoriseTransaction(xs:string payer, xs:string payee, ns0:Money amount, xs:boolean isPayerAmount, ns0:Password paymentPassword, ns0:CTID clientTransaction, ns0:Description description, ns0:OperationInfo operationInfo, xs:string paymentPasswordChallenge, ns0:PersonalInformation personalInformation, xs:long transactionId, )
+            AuthoriseTransactionBatch(xs:boolean transactional, xs:boolean exitOnFailure, ns0:AuthoriseTransactionRequestType[] transaction, )
+            CancelTransaction(xs:long transactionId, xs:string protectionCode, ns0:Description description, )
+            CancelTransactionBatch(xs:boolean transactional, xs:boolean exitOnFailure, ns0:CancelTransactionRequestType[] transaction, )
+            ConfirmPersonification(xs:string personificationCode, ns0:PersonalInformation personalInformation, )
+            ConfirmTransaction(xs:long transactionId, ns0:Password paymentPassword, xs:string protectionCode, ns0:OperationInfo operationInfo, ns0:Money amount, xs:boolean isPayerAmount, xs:string paymentPasswordChallenge, ns0:CTID clientTransaction, ns0:PersonalInformation personalInformation, )
+            ConfirmTransactionBatch(xs:boolean transactional, xs:boolean exitOnFailure, ns0:ConfirmTransactionRequestType[] transaction, )
+            CreateAccount(ns0:Currency currency, xs:string alias, ns0:AccountPaymentPasswordType paymentPasswordType, xs:string paymentPassword, xs:long unitId, xs:string onSuccessfulDebitUrl, xs:string onSuccessfulCreditUrl, xs:string signature, ns0:Money lowBalanceThreshold, ns0:Money highBalanceThreshold, xs:long prototypeAccountId, xs:string onCancelledDebitUrl, xs:string onCancelledCreditUrl, )
+            CreateBankAccount(xs:long id, ns0:KeyValueApprovedAttribute[] attribute, xs:long unitId, xs:long profileId, )
+            CreateProfile(xs:long unitId, xs:long profileId, ns0:ProfileType profileType, ns0:Profile profile, )
+            CreateProfileDocument(xs:long id, ns0:DocumentType type, ns0:KeyValueApprovedAttribute[] attribute, xs:boolean hasAttachedFiles, xs:long unitId, xs:long profileId, )
+            DeleteAccountRelation(ns0:AccountId accountId, ns0:Email principalEmail, )
+            EditAccount(ns0:AccountId id, xs:string alias, xs:string paymentPassword, xs:string oldPaymentPassword, xs:string onSuccessfulDebitUrl, xs:string onSuccessfulCreditUrl, xs:string signature, ns0:Money lowBalanceThreshold, ns0:Money highBalanceThreshold, xs:long prototypeAccountId, xs:string oldPaymentPasswordChallenge, xs:string onCancelledDebitUrl, xs:string onCancelledCreditUrl, )
+            EditBankAccount(xs:long id, ns0:KeyValueApprovedAttribute[] attribute, xs:long unitId, xs:long profileId, )
+            EditProfile(xs:long unitId, xs:long profileId, ns0:Profile profile, xs:long parentId, )
+            EditProfileDocument(xs:long id, ns0:DocumentType type, ns0:KeyValueApprovedAttribute[] attribute, xs:boolean hasAttachedFiles, xs:long unitId, xs:long profileId, )
+            FindAccountByAlias()
+            FindAccountById()
+            FindAccountRelations(ns0:AccountId accountId, )
+            FindAccountsList(xs:long unitId, xs:string alias, ns0:Currency currency, xs:boolean isDelegatedAccount, )
+            FindBankAccounts(xs:long unitId, xs:long profileId, )
+            FindContracts(xs:long unitId, )
+            FindLastOperationsList(xs:long unitId, xs:int transactionsQuantity, )
+            FindLegalInformation(xs:long unitId, xs:long profileId, )
+            FindOperationsList(ns0:Pager pager, ns0:filter filter, )
+            FindOperationsListByCTID(ns0:Pager pager, ns0:AccountId accountId, ns0:CTID clientTransaction, )
+            FindProfileDocumentFiles(xs:long documentId, )
+            FindProfileDocuments(xs:long unitId, xs:long profileId, )
+            FindProfileInfo(ns0:Pager pager, ns0:filter filter, )
+            FindProfileInfoByAccountId()
+            ForecastTransaction(xs:string payer, xs:string payee, ns0:Money amount, xs:boolean isPayerAmount, ns0:Password paymentPassword, ns0:CTID clientTransaction, ns0:Description description, ns0:OperationInfo operationInfo, xs:string paymentPasswordChallenge, ns0:PersonalInformation personalInformation, )
+            GetAccountPaymentPasswordChallenge(ns0:AccountId accountId, )
+            GetAccountRelation(ns0:AccountId accountId, ns0:Email principalEmail, )
+            GetFinancialFlowsList(xs:long unitId, xs:date dateFrom, xs:date dateTo, ns0:AccountId[] accountIds, ns0:Currency currencyCode, ns0:OperationTypeCategory operationTypeCategory, ns0:OperationAmountType operationAmountType, xs:boolean categoryDetails, ns0:KeyValueAttribute[] attribute, ns0:OperationStatusState operationStatusState, )
+            GetOperationDetailsById(xs:long GetOperationDetailsByIdRequest, )
+            GetPersonificationCode()
+            GetProfileInfo(xs:long unitId, xs:long profileId, )
+            GetTurnoverList(xs:long unitId, xs:date dateFrom, xs:date dateTo, ns0:AccountId[] accountIds, ns0:Currency currencyCode, xs:boolean groupByCurrency, ns0:OperationTypeCategory operationTypeCategory, xs:boolean categoryDetails, ns0:KeyValueAttribute[] attribute, )
+            Invoice(xs:string payer, xs:long payee, ns0:Money amount, ns0:CTID clientTransaction, ns0:Description description, xs:string mnt_custom1, xs:string mnt_custom2, xs:string mnt_custom3, ns0:OperationInfo operationInfo, )
+            InvoiceBatch(xs:boolean transactional, xs:boolean exitOnFailure, ns0:InvoiceRequestType[] transaction, )
+            Login(xs:string login, xs:string password, )
+            Logout()
+            Payment(xs:string payer, xs:string payee, ns0:Money amount, xs:boolean isPayerAmount, ns0:Password paymentPassword, ns0:CTID clientTransaction, ns0:Description description, ns0:OperationInfo operationInfo, xs:string paymentPasswordChallenge, ns0:PersonalInformation personalInformation, )
+            PaymentBatch(xs:boolean transactional, xs:boolean exitOnFailure, ns0:PaymentRequestType[] transaction, )
+            PaymentSystemInfo(ns0:AccountId accountId, ns0:Money amount, )
+            Refund(xs:long transactionId, ns0:Money amount, ns0:Password paymentPassword, ns0:CTID clientTransaction, ns0:Description description, ns0:OperationInfo operationInfo, xs:string paymentPasswordChallenge, )
+            SaveAccountRelation(ns0:AccountId accountId, ns0:Email principalEmail, xs:boolean canViewAccount, xs:boolean canEditAccount, xs:boolean canProcessOperation, ns0:Password paymentPassword, xs:string paymentPasswordChallenge, )
+            SecureData(xs:string publicId, ns0:KeyValueAttribute[] attribute, )
+            Transfer(xs:string payer, xs:string payee, ns0:Money amount, xs:boolean isPayerAmount, ns0:Password paymentPassword, ns0:CTID clientTransaction, ns0:Description description, ns0:OperationInfo operationInfo, xs:string paymentPasswordChallenge, ns0:PersonalInformation personalInformation, )
+            TransferBatch(xs:boolean transactional, xs:boolean exitOnFailure, ns0:TransactionRequestType[] transaction, )
+            UploadProfileDocumentFile(ns0:File file, )
+            VerifyPayment(xs:string payer, xs:string payee, ns0:Money amount, xs:boolean isPayerAmount, ns0:Password paymentPassword, ns0:CTID clientTransaction, ns0:Description description, ns0:OperationInfo operationInfo, xs:string paymentPasswordChallenge, ns0:PersonalInformation personalInformation, )
+            VerifyPaymentBatch(xs:boolean transactional, xs:boolean exitOnFailure, ns0:PaymentRequestType[] transaction, )
+            VerifyPersonificationCode(xs:string personificationCode, )
+            VerifyTransaction(xs:long transactionId, xs:string payer, ns0:Money amount, xs:boolean isPayerAmount, ns0:OperationInfo operationInfo, ns0:Password paymentPassword, xs:string paymentPasswordChallenge, ns0:CTID clientTransaction, ns0:PersonalInformation personalInformation, )
+            VerifyTransfer(xs:string payer, xs:string payee, ns0:Money amount, xs:boolean isPayerAmount, ns0:Password paymentPassword, ns0:CTID clientTransaction, ns0:Description description, ns0:OperationInfo operationInfo, xs:string paymentPasswordChallenge, ns0:PersonalInformation personalInformation, )
+         Types (61):
+            ns0:AccountAccessInfo
+            ns0:AccountId
+            ns0:AccountInfo
+            ns0:AccountPaymentPasswordType
+            ns0:AccountRelation
+            ns0:AccountStatement
+            ns0:AccountStatementRecord
+            ns0:AccountStatus
+            ns0:AccountType
+            ns0:AuthoriseTransactionBatchRequestType
+            ns0:AuthoriseTransactionRequestType
+            ns0:BankAccount
+            ns0:CTID
+            ns0:CancelTransactionBatchRequestType
+            ns0:CancelTransactionBatchResponseType
+            ns0:CancelTransactionRequestType
+            ns0:CancelTransactionResponseType
+            ns0:ConfirmTransactionBatchRequestType
+            ns0:ConfirmTransactionRequestType
+            ns0:Contract
+            ns0:Currency
+            ns0:Description
+            ns0:Document
+            ns0:DocumentType
+            ns0:Email
+            ns0:Entity
+            ns0:EntityBatchRequestType
+            ns0:Fee
+            ns0:File
+            ns0:ForecastTransactionResponseType
+            ns0:InfoTariff
+            ns0:InfoUrl
+            ns0:InvoiceBatchRequestType
+            ns0:InvoiceRequestType
+            ns0:KeyValueApprovedAttribute
+            ns0:KeyValueAttribute
+            ns0:LegalInformation
+            ns0:Money
+            ns0:OperationAmountType
+            ns0:OperationInfo
+            ns0:OperationInfoBatchResponseType
+            ns0:OperationInfoList
+            ns0:OperationStatus
+            ns0:OperationStatusState
+            ns0:OperationTypeCategory
+            ns0:Pager
+            ns0:Password
+            ns0:PaymentBatchRequestType
+            ns0:PaymentRequestType
+            ns0:PaymentSystemInfoComplexType
+            ns0:PersonalInformation
+            ns0:Profile
+            ns0:ProfileType
+            ns0:ReferenceData
+            ns0:TransactionBatchRequestType
+            ns0:TransactionBatchResponseType
+            ns0:TransactionRequestType
+            ns0:TransactionResponseType
+            ns0:VerifyTransactionResponseType
+            ns0:VerifyTransferResponseType
+            ns0:Version
+
+
