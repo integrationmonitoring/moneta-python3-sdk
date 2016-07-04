@@ -78,8 +78,8 @@ createInvoice = 0
 [monetasdk_paysys_qiwi]
 group = terminal
 title = QIWI Wallet
-accountId = 822360
-unitId = 0
+accountId = 15598507
+unitId = 822360
 createInvoice = 0
 
 [monetasdk_paysys_banktransfer]
