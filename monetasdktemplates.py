@@ -1,9 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import hashlib
-import ConfigParser, os
+from configparser import *
 
 # template classes
+
+
 class Node(object):
     def __init__(self, params, children):
         self.params = params
@@ -25,14 +27,14 @@ class ForNode(Node):
             context[dst] = obj
             yield iter(self.children)
 
+
 # template render method            
 def render(template, **context):
     output = []
     stack = [iter(template)]
-
     while stack:
         node = stack.pop()
-        if isinstance(node, basestring):
+        if isinstance(node, str):
             output.append(node.format(**context))
         elif isinstance(node, Node):
             stack.append(node.render(context))
@@ -46,12 +48,12 @@ def render(template, **context):
 
 def templateChoosePaymentSystemForm(formName='mntchoosepaysys'):
 
-    payment_systems_config = ConfigParser.RawConfigParser()
+    payment_systems_config = ConfigParser()
     payment_systems_config.read('config/payment_systems.ini')
 
     template = [
-    "<h1>Choose payment way:</h1>",
-    "<form name={formName} method=get>",
+        "<h1>Choose payment way:</h1>",
+        "<form name={formName} method=get>",
         "<input type=radio name=paysys value='{pv1}' selected='selected' /> {pn1}",
         "<input type=radio name=paysys value='{pv2}' /> {pn2}",
         "<input type=radio name=paysys value='{pv3}' /> {pn3}",
@@ -64,51 +66,44 @@ def templateChoosePaymentSystemForm(formName='mntchoosepaysys'):
     "</form>"
     ]
 
-    return(render(template, formName = formName, pv1 = 'payanyway', pn1 = payment_systems_config.get('monetasdk_paysys_payanyway', 'title'),
-        pv2 = 'moneta', pn2 = payment_systems_config.get('monetasdk_paysys_moneta', 'title'),
-        pv3 = 'walletone', pn3 = payment_systems_config.get('monetasdk_paysys_walletone', 'title'),
-        pv4 = 'yandex', pn4 = payment_systems_config.get('monetasdk_paysys_yandex', 'title'),
-        pv5 = 'qiwi', pn5 = payment_systems_config.get('monetasdk_paysys_qiwi', 'title'),
-        pv6 = 'euroset', pn6 = payment_systems_config.get('monetasdk_paysys_euroset', 'title'),
-        pv7 = 'sberbank', pn7 = payment_systems_config.get('monetasdk_paysys_sberbank', 'title'),
-        pv8 = 'plastic', pn8 = payment_systems_config.get('monetasdk_paysys_plastic', 'title') ))
+    return render(template, formName=formName,
+                  pv1='payanyway', pn1=payment_systems_config.get('monetasdk_paysys_payanyway', 'title'),
+                  pv2='moneta', pn2=payment_systems_config.get('monetasdk_paysys_moneta', 'title'),
+                  pv3='walletone', pn3=payment_systems_config.get('monetasdk_paysys_walletone', 'title'),
+                  pv4='yandex', pn4=payment_systems_config.get('monetasdk_paysys_yandex', 'title'),
+                  pv5='qiwi', pn5=payment_systems_config.get('monetasdk_paysys_qiwi', 'title'),
+                  pv6='euroset', pn6=payment_systems_config.get('monetasdk_paysys_euroset', 'title'),
+                  pv7='sberbank', pn7=payment_systems_config.get('monetasdk_paysys_sberbank', 'title'),
+                  pv8='plastic', pn8=payment_systems_config.get('monetasdk_paysys_plastic', 'title'))
 
 
 def templatePaymentFrom(paysys, formName, orderId, amount, currency, description=''):
-
-    if (formName == ''):
+    if formName == '':
        formName = 'mntpay'
-
-    if (currency == ''):
+    if currency == '':
        currency = 'RUB'
-
     amount = "%.2f" % round(amount, 2)
-
-    basic_config = ConfigParser.RawConfigParser()
+    basic_config = ConfigParser()
     basic_config.read('config/basic_settings.ini')
-    payment_systems_config = ConfigParser.RawConfigParser()
+    payment_systems_config = ConfigParser()
     payment_systems_config.read('config/payment_systems.ini')
-    payment_urls_config = ConfigParser.RawConfigParser()
+    payment_urls_config = ConfigParser()
     payment_urls_config.read('config/payment_urls.ini')
-    success_config = ConfigParser.RawConfigParser()
+    success_config = ConfigParser()
     success_config.read('config/success_fail_urls.ini')
-
-    urlChunks = []
-    if (basic_config.get('basic', 'monetasdk_demo_mode').strip(' \t\n\r') == '1'):
+    urlChunks = list()
+    if basic_config.get('basic', 'monetasdk_demo_mode').strip(' \t\n\r') == '1':
         urlChunks.append(payment_urls_config.get('payment_urls', 'monetasdk_demo_url').strip(' \t\n\r'))
     else:
         urlChunks.append(payment_urls_config.get('payment_urls', 'monetasdk_production_url').strip(' \t\n\r'))
-
-    urlChunks.append(payment_urls_config.get('payment_urls', 'monetasdk_assistant_link').strip(' \t\n\r'))  
+    urlChunks.append(payment_urls_config.get('payment_urls', 'monetasdk_assistant_link').strip(' \t\n\r'))
     formAction = ''.join(urlChunks)
-
     accountId = basic_config.get('basic', 'monetasdk_account_id')
     accountCode = basic_config.get('basic', 'monetasdk_account_code')
     testMode = basic_config.get('basic', 'monetasdk_demo_mode')
     successUrl = success_config.get('success', 'monetasdk_success_url')
     failUrl = success_config.get('success', 'monetasdk_fail_url')
-
-    signatureChunks = []
+    signatureChunks = list()
     signatureChunks.append(accountId.strip(' \t\n\r'))
     signatureChunks.append(orderId)
     signatureChunks.append(amount.strip(' \t\n\r'))
@@ -117,106 +112,86 @@ def templatePaymentFrom(paysys, formName, orderId, amount, currency, description
     signatureChunks.append(accountCode.strip(' \t\n\r'))
     signature = ''.join(signatureChunks)
     signatureMd5 = hashlib.md5(signature.encode('utf-8')).hexdigest()
-
     template = [
-    "<h1>Click pay button</h1>",
-    "<form name={formName} method=get action={formAction}>",
+        "<h1>Click pay button</h1>",
+        "<form name={formName} method=get action={formAction}>",
         "<input type=hidden name=MNT_ID value='{accountId}' />",
         "<input type=hidden name=MNT_TRANSACTION_ID value='{orderId}' />",
         "<input type=hidden name=MNT_AMOUNT value='{amount}' />",
         "<input type=hidden name=MNT_CURRENCY_CODE value='{currency}' />",
         "<input type=hidden name=MNT_TEST_MODE value='{testMode}' />"
     ]
-
     unitId = ''
-    if (paysys and paysys != ''):
-        paysysChunks = []
+    if paysys and paysys != '':
+        paysysChunks = list()
         paysysChunks.append('monetasdk_paysys_')
         paysysChunks.append(paysys)
         paysysGroup = ''.join(paysysChunks)
         unitId = payment_systems_config.get(paysysGroup, 'unitId')
         template.append("<input type=hidden name=paymentSystem.unitId value='{unitId}' />")
         template.append("<input type=hidden name=paymentSystem.limitIds value='{unitId}' />")
-
-    if (successUrl and successUrl != ''):   
+    if successUrl and successUrl != '':
         template.append("<input type=hidden name=MNT_SUCCESS_URL value='{successUrl}' />")
-
-    if (failUrl and failUrl != ''):
+    if failUrl and failUrl != '':
         template.append("<input type=hidden name=MNT_FAIL_URL value='{failUrl}' />")
-
-    if (description and description != ''):
+    if description and description != '':
         template.append("<input type=hidden name=MNT_DESCRIPTION value='{description}' />")
-
-    if (accountCode and accountCode != ''):
+    if accountCode and accountCode != '':
         template.append("<input type=hidden name=MNT_SIGNATURE value='{signatureMd5}' />")
-
     template.append("<input type=submit value='Pay' />")
     template.append("</form>")
-
-    return(render(template, formName = formName, formAction = formAction, accountId = accountId, orderId = orderId,
-                  amount = amount, currency = currency, testMode = testMode, unitId = unitId, successUrl = successUrl,
-                  failUrl = failUrl, description = description, signatureMd5 = signatureMd5))
+    return render(template, formName=formName, formAction=formAction, accountId=accountId, orderId=orderId,
+                  amount=amount, currency=currency, testMode=testMode, unitId=unitId, successUrl=successUrl,
+                  failUrl=failUrl, description=description, signatureMd5=signatureMd5)
 
 
 def templateAccountBalance(accountId, balance, availableBalance, currency):
     template = [
-    "<h1>Account info:</h1>",
-    "<ul>",
+        "<h1>Account info:</h1>",
+        "<ul>",
         "<li><b>Account ID:</b> {accountId}</li>",
         "<li><b>Balance:</b> {balance}</li>",
         "<li><b>Available balance:</b> {availableBalance}</li>",
         "<li><b>Currency:</b> {currency}</li>",
-    "</ul>"
+        "</ul>"
     ]
-    
-    return(render(template, accountId = accountId, balance = balance, availableBalance = availableBalance, currency = currency))
+    return render(template, accountId=accountId, balance=balance, availableBalance=availableBalance, currency=currency)
 
 
 def templateOperationInfo(data):
-
-    operationid = ''
+    operationid = data.id
     sourceamount = ''
     sourcecurrencycode = ''
     created = ''
     targettransaction = ''
     sourceaccountid = ''
-
-    operationid = data.id
-
     for element in data.attribute:
-        if (element.key == 'sourceamount'):
+        if element.key == 'sourceamount':
             sourceamount = element.value
-
-        if (element.key == 'sourcecurrencycode'):
+        if element.key == 'sourcecurrencycode':
             sourcecurrencycode = element.value
-
-        if (element.key == 'created'):
+        if element.key == 'created':
             created = element.value
-
-        if (element.key == 'targettransaction'):
+        if element.key == 'targettransaction':
             targettransaction = element.value
-
-        if (element.key == 'sourceaccountid'):
+        if element.key == 'sourceaccountid':
             sourceaccountid = element.value
-
     template = [
-    "<h1>Operation info:</h1>",
-    "<ul>",
+        "<h1>Operation info:</h1>",
+        "<ul>",
         "<li><b>Source account ID:</b> {sourceaccountid}</li>",
         "<li><b>Operation ID:</b> {operationid}</li>",
         "<li><b>Source amount:</b> {sourceamount}</li>",
         "<li><b>Source currency:</b> {sourcecurrencycode}</li>",
         "<li><b>Date created:</b> {created}</li>",
         "<li><b>Target transaction:</b> {targettransaction}</li>",
-    "</ul>"
+        "</ul>"
     ]
-
-    return(render(template, sourceamount = sourceamount, operationid = operationid, sourcecurrencycode = sourcecurrencycode, 
-                  created = created, targettransaction = targettransaction, sourceaccountid = sourceaccountid))
+    return render(template, sourceamount=sourceamount, operationid=operationid, sourcecurrencycode=sourcecurrencycode,
+                  created=created, targettransaction=targettransaction, sourceaccountid=sourceaccountid)
 
 
 def templateProfileInfo(data):
-    
     fio_contact = ''
     tariff = ''
     registration_date_ru = ''
@@ -231,53 +206,38 @@ def templateProfileInfo(data):
     typeid = ''
     parentid = ''
     profileid = ''
-    
     for element in data:
-        if (element.key == 'fio_contact'):
+        if element.key == 'fio_contact':
             fio_contact = element.value
-            
-        if (element.key == 'tariff'):
+        if element.key == 'tariff':
             tariff = element.value
-            
-        if (element.key == 'registration_date_ru'):
+        if element.key == 'registration_date_ru':
             registration_date_ru = element.value
-            
-        if (element.key == 'url'):
+        if element.key == 'url':
             url = element.value
-            
-        if (element.key == 'inn'):
+        if element.key == 'inn':
             inn = element.value
-            
-        if (element.key == 'unitid'):
+        if element.key == 'unitid':
             unitid = element.value
-            
-        if (element.key == 'profileType'):
+        if element.key == 'profileType':
             profileType = element.value
-            
-        if (element.key == 'name'):
+        if element.key == 'name':
             name = element.value
-             
-        if (element.key == 'organization_name'):
+        if element.key == 'organization_name':
             organization_name = element.value
-             
-        if (element.key == 'fio_accountant'):
+        if element.key == 'fio_accountant':
             fio_accountant = element.value
-
-        if (element.key == 'contact_email'):
+        if element.key == 'contact_email':
             contact_email = element.value
-             
-        if (element.key == 'typeid'):
+        if element.key == 'typeid':
             typeid = element.value
-             
-        if (element.key == 'parentid'):
+        if element.key == 'parentid':
             parentid = element.value
-             
-        if (element.key == 'profileid'):
+        if element.key == 'profileid':
             profileid = element.value
-
     template = [
-    "<h1>Profile info:</h1>",
-    "<ul>",
+        "<h1>Profile info:</h1>",
+        "<ul>",
         "<li><b>Business name:</b> {name}</li>",
         "<li><b>Organization name:</b> {organization_name}</li>",
         "<li><b>Contact person:</b> {fio_contact}</li>",
@@ -292,11 +252,9 @@ def templateProfileInfo(data):
         "<li><b>Type ID:</b> {typeid}</li>",
         "<li><b>Parent ID:</b> {parentid}</li>",
         "<li><b>Profile ID:</b> {profileid}</li>",
-    "</ul>"
+        "</ul>"
     ]
-    
-    return(render(template, fio_contact = fio_contact, tariff = tariff, registration_date_ru = registration_date_ru, url = url,
-                  inn = inn, unitid = unitid, profileType = profileType, name = name, organization_name = organization_name,
-                  fio_accountant = fio_accountant, contact_email = contact_email, typeid = typeid, parentid = parentid,
-                  profileid = profileid))
-
+    return render(template, fio_contact=fio_contact, tariff=tariff, registration_date_ru=registration_date_ru, url=url,
+                  inn=inn, unitid=unitid, profileType=profileType, name=name, organization_name=organization_name,
+                  fio_accountant=fio_accountant, contact_email=contact_email, typeid=typeid, parentid=parentid,
+                  profileid=profileid)

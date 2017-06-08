@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from monetasdkmethods import *
 
@@ -16,3 +16,6 @@ from monetasdkmethods import *
 
 # result = showOperationInfo(387980)
 # print(result)
+
+# result = createInvoice(payer='303', payee='12345678', amount='10.00', orderId='pysdkTest01');
+# print(result);
